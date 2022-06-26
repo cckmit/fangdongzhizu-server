@@ -22,18 +22,18 @@ public class NettyUtil {
     private static ConcurrentMap<Channel, Transmit> channels = new ConcurrentHashMap<>();
 
 
-    public static boolean saveUser(Channel channel, String name) {
+    public static boolean saveUser(Channel channel, String from) {
         Transmit transmit = channels.get(channel);
         if (transmit == null) {
             return false;
         }
         if (!channel.isActive()) {
-            log.error("当前服务通道未激活，请联系管理员, 名称是: {}", name);
+            log.error("当前服务通道未激活，请联系管理员, 名称是: {}", from);
             return false;
         }
         // 增加一个认证用户
         userCount.incrementAndGet();
-        transmit.setFrom(name);
+        transmit.setFrom(from);
         transmit.setAuth(true);
         transmit.setDatetime(String.valueOf(System.currentTimeMillis()));
         return true;

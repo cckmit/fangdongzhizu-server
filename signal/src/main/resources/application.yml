@@ -1,4 +1,2 @@
-# 应用名称
-spring.application.name=signal
-
-
+server:
+  port: 7879

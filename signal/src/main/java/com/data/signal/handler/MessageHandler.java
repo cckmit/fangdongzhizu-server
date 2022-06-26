@@ -9,8 +9,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 import java.util.Map;
-
-import static com.data.signal.constants.Constant.MSG_SYSTEM_TYPE;
 import static com.data.signal.constants.Constant.USER_ONLINE_COUNT;
 
 @Slf4j

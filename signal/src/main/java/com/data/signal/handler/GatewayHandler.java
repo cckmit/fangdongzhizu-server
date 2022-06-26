@@ -62,10 +62,6 @@ public class GatewayHandler extends SimpleChannelInboundHandler<Object> {
      * 处理websocket请求
      */
     private void handleWebSocket(ChannelHandlerContext ctx, WebSocketFrame frame) {
-        // 当前仅支持文本信息传递
-        if (!(frame instanceof TextWebSocketFrame)) {
-            throw new UnsupportedOperationException(frame.getClass().getName() + " 不被支持的frame类型");
-        }
         // 判断是否关闭链路命令
         if (frame instanceof CloseWebSocketFrame) {
             handshaker.close(ctx.channel(), (CloseWebSocketFrame) frame.retain());
@@ -84,6 +80,10 @@ public class GatewayHandler extends SimpleChannelInboundHandler<Object> {
             ctx.writeAndFlush(new PongWebSocketFrame(frame.content().retain()));
             return;
         }
+        // 当前仅支持文本信息传递
+        if (!(frame instanceof TextWebSocketFrame)) {
+            throw new UnsupportedOperationException(frame.getClass().getName() + " 不被支持的frame类型");
+        }
         // 判断是否文本消息
         if (frame instanceof TextWebSocketFrame) {
             String message = ((TextWebSocketFrame) frame).text();
@@ -96,7 +96,7 @@ public class GatewayHandler extends SimpleChannelInboundHandler<Object> {
                     log.info("-------收到pong消息, address: {}-------",NettyUtil.getChannelRemoteIP(channel));
                     return;
                 case Constant.MSG_AUTH_TYPE:
-                    boolean isSuccess = NettyUtil.saveUser(channel, json.getString("name"));
+                    boolean isSuccess = NettyUtil.saveUser(channel, json.getString("from"));
                     NettyUtil.sendMsg(channel,JSON.toJSONString(Map.of("type", USER_AUTH_STATUS, USER_AUTH_STATUS, isSuccess)));
                     if (isSuccess) {
                         NettyUtil.broadCastSystemMsg(JSON.toJSONString(Map.of("type", USER_ONLINE_COUNT, USER_ONLINE_COUNT, NettyUtil.getAuthUserCount())));
@@ -123,7 +123,7 @@ public class GatewayHandler extends SimpleChannelInboundHandler<Object> {
             // 判断Channel是否读空闲, 读空闲时移除Channel
             if (evnet.state().equals(IdleState.READER_IDLE)) {
                 final String remoteAddress = NettyUtil.getChannelRemoteIP(ctx.channel());
-                log.warn("网络服务器管道：空闲异常 [{}]", remoteAddress);
+                log.warn("网络服务管道通知：有异常空闲通道 [{}]", remoteAddress);
                 NettyUtil.removeChannel(ctx.channel());
                 NettyUtil.broadCastSystemMsg(JSON.toJSONString(Map.of("type", USER_ONLINE_COUNT, USER_ONLINE_COUNT, NettyUtil.getAuthUserCount())));
             }
