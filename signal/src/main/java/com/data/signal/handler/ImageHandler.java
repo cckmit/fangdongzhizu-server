@@ -13,7 +13,7 @@ import java.util.Random;
 import static com.data.signal.constants.Constant.USER_ONLINE_COUNT;
 
 @Slf4j
-public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class ImageHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     /**
      * 处理客户端发送的消息
@@ -21,7 +21,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFra
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws Exception {
         Transmit transmit = NettyUtil.getUserInfo(ctx.channel());
-        if (transmit != null && transmit.getAuth() && "text".equals(transmit.getType())) {
+        if (transmit != null && transmit.getAuth() && "img".equals(transmit.getType())) {
             JSONObject json = JSONObject.parseObject(frame.text());
             // 广播返回用户发送的消息文本
             transmit.setId(new Random().nextLong());
@@ -29,10 +29,9 @@ public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFra
             transmit.setType(json.getString("type"));
             transmit.setTarget(json.getString("target"));
             transmit.setStatus("true"); // 消息状态默认已读
-            System.out.println("--------------> 这是我想看的 [文字] 传输数据:" + transmit.toString());
+            System.out.println("--------------> 这是我想看的 [图片] 传输数据:" + transmit.toString());
             NettyUtil.broadcastGeneralMsg(JSON.toJSONString(transmit));
         }
-        ctx.fireChannelRead(frame.retain());
     }
 
     @Override

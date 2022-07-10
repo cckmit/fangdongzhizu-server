@@ -2,6 +2,7 @@ package com.data.signal.impl;
 
 import com.data.signal.abstracts.BaseServer;
 import com.data.signal.handler.GatewayHandler;
+import com.data.signal.handler.ImageHandler;
 import com.data.signal.handler.MessageHandler;
 import com.data.signal.utils.NettyUtil;
 import io.netty.channel.ChannelInitializer;
@@ -49,13 +50,13 @@ public class ChatServer extends BaseServer {
                                 new HttpServerCodec(),   //请求解码器
                                 new HttpObjectAggregator(65536), //将多个消息转换成单一的消息对象
                                 new ChunkedWriteHandler(),  //支持异步发送大的码流，一般用于发送文件流
-                                new IdleStateHandler(60, 0, 0), //检测链路是否读空闲
+                                new IdleStateHandler(600, 0, 0), //检测链路是否读空闲
                                 new GatewayHandler(),   //处理握手和认证
-                                new MessageHandler()    //处理消息的发送
+                                new MessageHandler(),   //处理消息的发送
+                                new ImageHandler()     // 处理图片的发送
                         );
                     }
                 });
-
         try {
             cf = sb.bind().sync();
             InetSocketAddress addr = (InetSocketAddress) cf.channel().localAddress();

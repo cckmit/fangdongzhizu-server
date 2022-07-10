@@ -19,7 +19,7 @@ public class NettyUtil {
 
     private static AtomicInteger userCount = new AtomicInteger(0);
     private static ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock(true);
-    private static ConcurrentMap<Channel, Transmit> channels = new ConcurrentHashMap<>();
+    public static ConcurrentMap<Channel, Transmit> channels = new ConcurrentHashMap<>();
 
 
     public static boolean saveUser(Channel channel, String from) {

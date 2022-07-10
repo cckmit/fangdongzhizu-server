@@ -3,6 +3,7 @@ package com.data.signal.handler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.data.signal.constants.Constant;
+import com.data.signal.entity.Transmit;
 import com.data.signal.utils.NettyUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -102,14 +103,22 @@ public class GatewayHandler extends SimpleChannelInboundHandler<Object> {
                         NettyUtil.broadCastSystemMsg(JSON.toJSONString(Map.of("type", USER_ONLINE_COUNT, USER_ONLINE_COUNT, NettyUtil.getAuthUserCount())));
                     }
                     return;
-                case MSG_GENERAL_TYPE: //普通的消息留给MessageHandler处理
+                case Constant.MSG_IMG_TYPE:
+                    Transmit image = NettyUtil.channels.get(channel);
+                    image.setType(type);
+                    // 将图片消息留给ImageHandler处理
+                    break;
+                case MSG_TEXT_TYPE:
+                    Transmit text = NettyUtil.channels.get(channel);
+                    text.setType(type);
+                    // 将文字消息留给MessageHandler处理
                     break;
                 default:
                     log.warn("-------当前标识符：{} 未被识别，请联系管理员!!!-------", type);
                     return;
             }
         }
-        // 后续消息交给MessageHandler处理
+        // break消息交给后续流程处理
         ctx.fireChannelRead(frame.retain());
     }
 

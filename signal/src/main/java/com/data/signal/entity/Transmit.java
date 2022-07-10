@@ -9,6 +9,9 @@ import lombok.ToString;
 @ToString
 public class Transmit {
 
+    // 消息id
+    private Long id;
+
     // 消息源 (谁发的消息)
     private String from;
 
