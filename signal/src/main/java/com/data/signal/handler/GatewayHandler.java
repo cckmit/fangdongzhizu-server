@@ -108,7 +108,12 @@ public class GatewayHandler extends SimpleChannelInboundHandler<Object> {
                     image.setType(type);
                     // 将图片消息留给ImageHandler处理
                     break;
-                case MSG_TEXT_TYPE:
+                case Constant.MSG_VOICE_TYPE:
+                    Transmit voice = NettyUtil.channels.get(channel);
+                    voice.setType(type);
+                    // 将图片消息留给VoiceHandler处理
+                    break;
+                case Constant.MSG_TEXT_TYPE:
                     Transmit text = NettyUtil.channels.get(channel);
                     text.setType(type);
                     // 将文字消息留给MessageHandler处理

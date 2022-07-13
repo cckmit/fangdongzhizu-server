@@ -9,6 +9,7 @@ public class Constant {
     public static final String MSG_PONG_TYPE = "pong";
     public static final String MSG_AUTH_TYPE = "auth";
     public static final String MSG_IMG_TYPE = "img";
+    public static final String MSG_VOICE_TYPE = "voice";
 
     // 返回前端数据的key
     public static final String USER_ONLINE_COUNT = "online";

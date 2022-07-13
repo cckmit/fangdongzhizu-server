@@ -4,6 +4,7 @@ import com.data.signal.abstracts.BaseServer;
 import com.data.signal.handler.GatewayHandler;
 import com.data.signal.handler.ImageHandler;
 import com.data.signal.handler.MessageHandler;
+import com.data.signal.handler.VoiceHandler;
 import com.data.signal.utils.NettyUtil;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -53,7 +54,8 @@ public class ChatServer extends BaseServer {
                                 new IdleStateHandler(600, 0, 0), //检测链路是否读空闲
                                 new GatewayHandler(),   //处理握手和认证
                                 new MessageHandler(),   //处理消息的发送
-                                new ImageHandler()     // 处理图片的发送
+                                new ImageHandler(),     //处理图片的发送
+                                new VoiceHandler()      //处理语音的发送
                         );
                     }
                 });
