@@ -7,18 +7,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="common" />
         <module name="signal" />
+        <module name="user-server" />
+        <module name="auth" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="auth" target="11" />
+      <module name="common" target="11" />
       <module name="fangdongzhizu" target="11" />
       <module name="signal" target="11" />
+      <module name="user-server" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="auth" options="-parameters" />
+      <module name="common" options="-parameters" />
       <module name="fangdongzhizu" options="-parameters" />
       <module name="signal" options="-parameters" />
+      <module name="user-server" options="-parameters" />
     </option>
   </component>
 </project>

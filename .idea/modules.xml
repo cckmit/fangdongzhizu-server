@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/auth/auth.iml" filepath="$PROJECT_DIR$/auth/auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/fangdongzhizu.iml" filepath="$PROJECT_DIR$/fangdongzhizu.iml" />
       <module fileurl="file://$PROJECT_DIR$/signal/signal.iml" filepath="$PROJECT_DIR$/signal/signal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-server/user-server.iml" filepath="$PROJECT_DIR$/user-server/user-server.iml" />
     </modules>
   </component>
 </project>
